@@ -53,8 +53,8 @@ class FaveIcon: UIView {
 // MARK: create
 extension FaveIcon {
     
-    class func createFaveIcon(_ onView: UIView, icon: UIImage, color: UIColor, selectedIcon: UIImage?) -> FaveIcon {
-        let faveIcon = Init(FaveIcon(region: onView.bounds, icon: icon, color: color, selectedIcon: selectedIcon)) {
+    class func createFaveIcon(_ onView: UIButton, icon: UIImage, color: UIColor, selectedIcon: UIImage?) -> FaveIcon {
+        let faveIcon = Init(FaveIcon(region: onView.contentRect(forBounds: onView.bounds), icon: icon, color: color, selectedIcon: selectedIcon)) {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor                           = .clear
         }
