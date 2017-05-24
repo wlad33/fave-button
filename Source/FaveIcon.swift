@@ -26,7 +26,7 @@ import UIKit
 
 class FaveIcon: UIView {
     
-    var iconColor: UIColor = .gray
+    var iconColor: UIColor
     var iconImage: UIImage!
     var iconLayer: CAShapeLayer!
     var iconMask:  CALayer!
@@ -51,8 +51,8 @@ class FaveIcon: UIView {
 // MARK: create
 extension FaveIcon{
     
-    class func createFaveIcon(_ onView: UIView, icon: UIImage, color: UIColor) -> FaveIcon{
-        let faveIcon = Init(FaveIcon(region:onView.bounds, icon: icon, color: color)){
+    class func createFaveIcon(_ onView: UIView, icon: UIImage, color: UIColor) -> FaveIcon {
+        let faveIcon = Init(FaveIcon(region: onView.bounds, icon: icon, color: color)) {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor                           = .clear
         }
@@ -65,18 +65,18 @@ extension FaveIcon{
         return faveIcon
     }
     
-    func applyInit(){
+    func applyInit() {
         let maskRegion  = contentRegion.size.scaleBy(0.7).rectCentered(at: contentRegion.center)
         let shapeOrigin = CGPoint(x: -contentRegion.center.x, y: -contentRegion.center.y)
         
         
-        iconMask = Init(CALayer()){
+        iconMask = Init(CALayer()) {
             $0.contents      = iconImage.cgImage
             $0.contentsScale = UIScreen.main.scale
             $0.bounds        = maskRegion
         }
         
-        iconLayer = Init(CAShapeLayer()){
+        iconLayer = Init(CAShapeLayer()) {
             $0.fillColor = iconColor.cgColor
             $0.path      = UIBezierPath(rect: CGRect(origin: shapeOrigin, size: contentRegion.size)).cgPath
             $0.mask      = iconMask
@@ -88,9 +88,9 @@ extension FaveIcon{
 
 
 // MARK : animation
-extension FaveIcon{
+extension FaveIcon {
     
-    func animateSelect(_ isSelected: Bool = false, fillColor: UIColor, duration: Double = 0.5, delay: Double = 0){
+    func animateSelect(_ isSelected: Bool = false, fillColor: UIColor, duration: Double = 0.5, delay: Double = 0) {
         let animate = duration > 0.0
         
         if nil == tweenValues && animate {
@@ -119,7 +119,7 @@ extension FaveIcon{
             return
         }
         
-        let scaleAnimation = Init(CAKeyframeAnimation(keyPath: "transform.scale")){
+        let scaleAnimation = Init(CAKeyframeAnimation(keyPath: "transform.scale")) {
             $0.values    = tweenValues!
             $0.duration  = duration
             $0.beginTime = CACurrentMediaTime()+selectedDelay
@@ -138,7 +138,7 @@ extension FaveIcon{
         var t              = CGFloat(0.0)
         let tweenFunction  = Elastic.ExtendedEaseOut
         
-        while(t < d){
+        while(t < d) {
             let scale = tweenFunction(t, from, c, d, c+0.001, 0.39988)  // p=oscillations, c=amplitude(velocity)
             values.append(scale)
             t += tpf
