@@ -28,7 +28,7 @@ import UIKit
 
 public typealias DotColors = (first: UIColor, second: UIColor)
 
-public protocol FaveButtonDelegate {
+@objc public protocol FaveButtonDelegate {
     func faveButton(_ faveButton: FaveButton, didSelected selected: Bool)
     
     func faveButtonDotColors(_ faveButton: FaveButton) -> [DotColors]?
